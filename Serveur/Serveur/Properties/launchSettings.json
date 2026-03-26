@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Serveur": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ACCESSPOS_DB_CONNECTION": "sqlsrv",
+        "ACCESSPOS_DB_HOST": "127.0.0.1",
+        "ACCESSPOS_DB_PORT": "1433",
+        "ACCESSPOS_DB_DATABASE": "convoiturage",
+        "ACCESSPOS_DB_USERNAME": "access_user2",
+        "ACCESSPOS_DB_PASSWORD": "1234567890"
+      },
+      "applicationUrl": "https://localhost:58842;http://localhost:58843"
+    }
+  }
+}
