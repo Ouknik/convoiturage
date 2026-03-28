@@ -20,5 +20,7 @@ public class User
 
     public ICollection<Trip> Trips { get; set; } = new List<Trip>();
     public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+    public ICollection<Review> ReviewsGiven { get; set; } = new List<Review>();
+    public ICollection<Review> ReviewsReceived { get; set; } = new List<Review>();
     public Author? Author { get; set; }
 }

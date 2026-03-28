@@ -67,11 +67,16 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
@@ -98,6 +103,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+
+    var adminEmail = Environment.GetEnvironmentVariable("SUPERADMIN_EMAIL")?.Trim().ToLowerInvariant()
+        ?? "admin@convoiturage.local";
+    var adminPassword = Environment.GetEnvironmentVariable("SUPERADMIN_PASSWORD")
+        ?? "Admin@123456";
+    var adminName = Environment.GetEnvironmentVariable("SUPERADMIN_NAME")?.Trim()
+        ?? "Super Admin";
+
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+    await ApplicationDbSeeder.SeedDemoDataAsync(
+        dbContext,
+        passwordHasher,
+        adminName,
+        adminEmail,
+        adminPassword);
+}
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 

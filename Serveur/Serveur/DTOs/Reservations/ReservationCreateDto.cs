@@ -8,5 +8,13 @@ public class ReservationCreateDto
     public int TripId { get; set; }
 
     [Range(1, 8)]
-    public int SeatsReserved { get; set; }
+    public int Seats { get; set; }
+
+    [Required]
+    public string PaymentMethod { get; set; } = string.Empty;
+
+    public string? CardHolderName { get; set; }
+    public string? CardNumber { get; set; }
+    public string? ExpiryDate { get; set; }
+    public string? Cvv { get; set; }
 }

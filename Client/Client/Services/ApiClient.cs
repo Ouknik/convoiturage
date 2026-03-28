@@ -85,13 +85,28 @@ namespace Client.Services
             return await GetAsync<PagedResultDto<TripResponseDto>>(endpoint);
         }
 
-        public Task<ApiEnvelope<TripResponseDto>> CreateTripAsync(string departure, string destination, DateTime date, int availableSeats)
+        public Task<ApiEnvelope<TripResponseDto>> CreateTripAsync(
+            string departure,
+            string destination,
+            DateTime startDate,
+            DateTime endDate,
+            TimeSpan startTime,
+            decimal pricePerSeat,
+            int availableSeats)
         {
+            var departureDateTime = startDate.Date.Add(startTime);
+            var numberOfDays = Math.Max(1, (endDate.Date - startDate.Date).Days + 1);
+
             var payload = new TripCreateDto
             {
                 departure = departure,
                 destination = destination,
-                date = date.ToString("o"),
+                departureTime = departureDateTime.ToUniversalTime().ToString("o"),
+                startDate = startDate.Date.ToString("o"),
+                endDate = endDate.Date.ToString("o"),
+                startTime = startTime.ToString(),
+                numberOfDays = numberOfDays,
+                pricePerSeat = pricePerSeat,
                 availableSeats = availableSeats
             };
 
@@ -103,12 +118,29 @@ namespace Client.Services
             return DeleteAsync<object>("api/trips/" + tripId);
         }
 
-        public Task<ApiEnvelope<ReservationResponseDto>> CreateReservationAsync(int tripId, int seatsReserved)
+        public Task<ApiEnvelope<object>> DeleteAdminTripAsync(int tripId)
+        {
+            return DeleteAsync<object>("api/admin/trips/" + tripId);
+        }
+
+        public Task<ApiEnvelope<ReservationResponseDto>> CreateReservationAsync(
+            int tripId,
+            int seats,
+            string paymentMethod,
+            string cardHolderName = null,
+            string cardNumber = null,
+            string expiryDate = null,
+            string cvv = null)
         {
             var payload = new ReservationCreateDto
             {
                 tripId = tripId,
-                seatsReserved = seatsReserved
+                seats = seats,
+                paymentMethod = paymentMethod,
+                cardHolderName = cardHolderName,
+                cardNumber = cardNumber,
+                expiryDate = expiryDate,
+                cvv = cvv
             };
 
             return PostAsync<ReservationResponseDto>("api/reservations", payload);
@@ -117,6 +149,58 @@ namespace Client.Services
         public Task<ApiEnvelope<List<ReservationResponseDto>>> GetReservationsAsync()
         {
             return GetAsync<List<ReservationResponseDto>>("api/reservations");
+        }
+
+        public Task<ApiEnvelope<List<AdminUserDto>>> GetAdminUsersAsync()
+        {
+            return GetAsync<List<AdminUserDto>>("api/admin/users");
+        }
+
+        public Task<ApiEnvelope<List<TripResponseDto>>> GetAdminTripsAsync()
+        {
+            return GetAsync<List<TripResponseDto>>("api/admin/trips");
+        }
+
+        public Task<ApiEnvelope<List<AdminReservationDto>>> GetAdminReservationsAsync()
+        {
+            return GetAsync<List<AdminReservationDto>>("api/admin/reservations");
+        }
+
+        public Task<ApiEnvelope<List<ReservationResponseDto>>> GetTripReservationsAsync(int tripId)
+        {
+            return GetAsync<List<ReservationResponseDto>>("api/trips/" + tripId + "/reservations");
+        }
+
+        public Task<ApiEnvelope<ReviewResponseDto>> CreateReviewAsync(int tripId, int rating, string comment)
+        {
+            var payload = new ReviewCreateDto
+            {
+                tripId = tripId,
+                rating = rating,
+                comment = comment
+            };
+
+            return PostAsync<ReviewResponseDto>("api/reviews", payload);
+        }
+
+        public Task<ApiEnvelope<List<ReviewResponseDto>>> GetDriverReviewsAsync(int driverId)
+        {
+            return GetAsync<List<ReviewResponseDto>>("api/reviews/driver/" + driverId);
+        }
+
+        public Task<ApiEnvelope<DriverProfileDto>> GetDriverProfileAsync(int driverId)
+        {
+            return GetAsync<DriverProfileDto>("api/drivers/" + driverId + "/profile");
+        }
+
+        public Task<ApiEnvelope<List<PaymentResponseDto>>> GetAdminPaymentsAsync()
+        {
+            return GetAsync<List<PaymentResponseDto>>("api/admin/payments");
+        }
+
+        public Task<ApiEnvelope<List<PaymentResponseDto>>> GetPaymentsAsync()
+        {
+            return GetAsync<List<PaymentResponseDto>>("api/payments");
         }
 
         public Task<ApiEnvelope<AuthorResponseDto>> GetAuthorByUserIdAsync(int userId)
@@ -137,6 +221,11 @@ namespace Client.Services
         public Task<ApiEnvelope<object>> DeleteReservationAsync(int reservationId)
         {
             return DeleteAsync<object>("api/reservations/" + reservationId);
+        }
+
+        public Task<ApiEnvelope<object>> DeleteAdminReservationAsync(int reservationId)
+        {
+            return DeleteAsync<object>("api/admin/reservations/" + reservationId);
         }
 
         private async Task<ApiEnvelope<T>> GetAsync<T>(string endpoint)

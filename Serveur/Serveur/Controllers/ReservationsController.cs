@@ -7,7 +7,7 @@ using Serveur.Services.Interfaces;
 
 namespace Serveur.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Passenger")]
 [ApiController]
 [Route("api/[controller]")]
 public class ReservationsController : ControllerBase

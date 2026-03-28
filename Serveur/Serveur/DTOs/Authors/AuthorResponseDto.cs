@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Serveur.DTOs.Authors;
 
 public class AuthorResponseDto
@@ -10,4 +12,5 @@ public class AuthorResponseDto
     public string Phone { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string ProfileImageUrl { get; set; } = string.Empty;
+    public List<SavedCardDto> SavedCards { get; set; } = new();
 }

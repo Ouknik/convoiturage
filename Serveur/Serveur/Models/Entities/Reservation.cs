@@ -14,4 +14,6 @@ public class Reservation
 
     [Range(1, 8)]
     public int SeatsReserved { get; set; }
+
+    public Payment? Payment { get; set; }
 }

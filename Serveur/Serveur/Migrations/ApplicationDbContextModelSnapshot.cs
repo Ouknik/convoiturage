@@ -61,6 +61,56 @@ namespace Serveur.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("Serveur.Models.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CardHolderName")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("CardNumber")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Cvv")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("ExpiryDate")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("Serveur.Models.Entities.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -82,9 +132,50 @@ namespace Serveur.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "TripId")
+                        .IsUnique();
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("Serveur.Models.Entities.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("TripId");
+
+                    b.HasIndex("PassengerId", "TripId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Serveur.Models.Entities.Trip", b =>
@@ -98,13 +189,16 @@ namespace Serveur.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Departure")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("DepartureTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Destination")
                         .IsRequired()
@@ -113,6 +207,26 @@ namespace Serveur.Migrations
 
                     b.Property<int>("DriverId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PricePerSeat")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -165,6 +279,17 @@ namespace Serveur.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Serveur.Models.Entities.Payment", b =>
+                {
+                    b.HasOne("Serveur.Models.Entities.Reservation", "Reservation")
+                        .WithOne("Payment")
+                        .HasForeignKey("Serveur.Models.Entities.Payment", "ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+                });
+
             modelBuilder.Entity("Serveur.Models.Entities.Reservation", b =>
                 {
                     b.HasOne("Serveur.Models.Entities.Trip", "Trip")
@@ -184,6 +309,33 @@ namespace Serveur.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Serveur.Models.Entities.Review", b =>
+                {
+                    b.HasOne("Serveur.Models.Entities.User", "Driver")
+                        .WithMany("ReviewsReceived")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Serveur.Models.Entities.User", "Passenger")
+                        .WithMany("ReviewsGiven")
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Serveur.Models.Entities.Trip", "Trip")
+                        .WithMany("Reviews")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Passenger");
+
+                    b.Navigation("Trip");
+                });
+
             modelBuilder.Entity("Serveur.Models.Entities.Trip", b =>
                 {
                     b.HasOne("Serveur.Models.Entities.User", "Driver")
@@ -195,9 +347,16 @@ namespace Serveur.Migrations
                     b.Navigation("Driver");
                 });
 
+            modelBuilder.Entity("Serveur.Models.Entities.Reservation", b =>
+                {
+                    b.Navigation("Payment");
+                });
+
             modelBuilder.Entity("Serveur.Models.Entities.Trip", b =>
                 {
                     b.Navigation("Reservations");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Serveur.Models.Entities.User", b =>
@@ -205,6 +364,10 @@ namespace Serveur.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Reservations");
+
+                    b.Navigation("ReviewsGiven");
+
+                    b.Navigation("ReviewsReceived");
 
                     b.Navigation("Trips");
                 });

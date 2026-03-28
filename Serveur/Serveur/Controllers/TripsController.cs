@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serveur.Common;
+using Serveur.DTOs.Reservations;
 using Serveur.DTOs.Trips;
 using Serveur.Helpers;
 using Serveur.Services.Interfaces;
@@ -32,6 +33,15 @@ public class TripsController : ControllerBase
         return Ok(ApiResponse<TripResponseDto>.Ok(result, "Trip retrieved successfully."));
     }
 
+    [Authorize(Roles = "Driver,Admin")]
+    [HttpGet("{id:int}/reservations")]
+    public async Task<IActionResult> GetTripReservations(int id, CancellationToken cancellationToken)
+    {
+        var userId = User.GetUserId();
+        var result = await _tripService.GetTripReservationsAsync(id, userId, cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<ReservationResponseDto>>.Ok(result, "Trip reservations retrieved successfully."));
+    }
+
     [Authorize(Roles = "Driver")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TripCreateDto request, CancellationToken cancellationToken)
@@ -41,7 +51,7 @@ public class TripsController : ControllerBase
         return StatusCode(StatusCodes.Status201Created, ApiResponse<TripResponseDto>.Ok(result, "Trip created successfully."));
     }
 
-    [Authorize]
+    [Authorize(Roles = "Driver")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

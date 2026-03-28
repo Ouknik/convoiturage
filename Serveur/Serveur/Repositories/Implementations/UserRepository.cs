@@ -20,12 +20,21 @@ public class UserRepository : IUserRepository
     public Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default) =>
         _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 
+    public async Task<IReadOnlyList<User>> GetAllAsync(CancellationToken cancellationToken = default) =>
+        await _dbContext.Users.AsNoTracking().OrderBy(u => u.Id).ToListAsync(cancellationToken);
+
     public Task<bool> EmailExistsAsync(string email, CancellationToken cancellationToken = default) =>
         _dbContext.Users.AnyAsync(u => u.Email == email, cancellationToken);
 
     public async Task AddAsync(User user, CancellationToken cancellationToken = default)
     {
         await _dbContext.Users.AddAsync(user, cancellationToken);
+    }
+
+    public Task DeleteAsync(User user, CancellationToken cancellationToken = default)
+    {
+        _dbContext.Users.Remove(user);
+        return Task.CompletedTask;
     }
 
     public Task SaveChangesAsync(CancellationToken cancellationToken = default) =>

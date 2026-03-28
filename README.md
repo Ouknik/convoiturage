@@ -1,47 +1,46 @@
 # Covoiturage Platform
 
-Professional carpooling platform built with:
+Plateforme de covoiturage (API + client desktop) avec architecture propre et UX WinForms moderne.
 
-- `ASP.NET Core 8` REST API (`Serveur`)
-- `SQL Server` + `Entity Framework Core`
-- `Windows Forms` desktop client (`Client`)
-- `JWT` authentication
-- Clean architecture style (Controllers / DTOs / Services / Repositories / Middleware)
-
----
-
-## Features
-
-- User registration/login with JWT
-- Roles: `Driver` / `Passenger`
-- Trips management (create/list/delete)
-- Reservations management (create/list/delete)
-- Author profile system (`User` 1:1 `Author`)
-- Modernized WinForms UX:
-  - Login/Register tabs
-  - Sidebar navigation
-  - Dashboard / Trips / Reservations / Profile
-  - Loading indicators, toasts, validation, empty states
+- Backend: `ASP.NET Core 8` (`Serveur`)
+- Base de données: `SQL Server` + `Entity Framework Core`
+- Client desktop: `WinForms .NET Framework 4.7.2` (`Client`)
+- Auth: `JWT` + rôles (`Admin`, `Driver`, `Passenger`)
 
 ---
 
-## Project Structure
+## 1) Fonctionnalités principales
 
-- `Serveur/Serveur/` → ASP.NET Core API
-- `Client/Client/` → WinForms Desktop App (.NET Framework 4.7.2)
+- Authentification / inscription (`JWT`)
+- Gestion des trajets (création, recherche, suppression)
+- Réservations avec paiement (`Cash` / `Card`) et popup de paiement
+- Profil utilisateur + cartes enregistrées (mode démo)
+- Admin panel (users / trips / reservations / payments)
+- Système de reviews drivers:
+  - note 1..5
+  - commentaire
+  - profil driver avec moyenne et liste des avis
+- UX WinForms SaaS:
+  - sidebar + pages Dashboard/Trips/Reservations/Profile
+  - cards modernes, toasts, loading, empty states
 
 ---
 
-## Prerequisites
+## 2) Arborescence
 
-Install:
+- `Serveur/Serveur/` : API ASP.NET Core
+- `Client/Client/` : WinForms client
 
-1. `Visual Studio Community 2026` (or compatible)
+---
+
+## 3) Prérequis
+
+1. `Visual Studio Community 2026` (ou équivalent)
 2. `.NET 8 SDK`
-3. `SQL Server` (local or remote)
-4. `dotnet-ef` tool
+3. `SQL Server`
+4. `dotnet-ef`
 
-Install EF tool (once):
+Installer EF CLI (une seule fois) :
 
 ```powershell
 dotnet tool install --global dotnet-ef
@@ -49,9 +48,9 @@ dotnet tool install --global dotnet-ef
 
 ---
 
-## Database Configuration
+## 4) Variables d'environnement DB
 
-The API reads SQL Server settings from environment variables:
+Le backend lit la connexion SQL Server depuis :
 
 - `ACCESSPOS_DB_CONNECTION=sqlsrv`
 - `ACCESSPOS_DB_HOST=127.0.0.1`
@@ -60,7 +59,7 @@ The API reads SQL Server settings from environment variables:
 - `ACCESSPOS_DB_USERNAME=access_user2`
 - `ACCESSPOS_DB_PASSWORD=1234567890`
 
-### PowerShell (current terminal session)
+PowerShell (session actuelle) :
 
 ```powershell
 $env:ACCESSPOS_DB_CONNECTION='sqlsrv'
@@ -73,40 +72,93 @@ $env:ACCESSPOS_DB_PASSWORD='1234567890'
 
 ---
 
-## Run Migrations
+## 5) Super Admin (optionnel)
 
-From repository root:
+Vous pouvez personnaliser le compte admin seedé au démarrage API :
+
+- `SUPERADMIN_EMAIL` (default: `admin@convoiturage.local`)
+- `SUPERADMIN_PASSWORD` (default: `Admin@123456`)
+- `SUPERADMIN_NAME` (default: `Super Admin`)
+
+Exemple :
+
+```powershell
+$env:SUPERADMIN_EMAIL='admin@convoiturage.local'
+$env:SUPERADMIN_PASSWORD='Admin@123456'
+$env:SUPERADMIN_NAME='Super Admin'
+```
+
+---
+
+## 6) Migration / DB reset
+
+### Appliquer toutes les migrations
 
 ```powershell
 dotnet ef database update --configuration Release --project "Serveur/Serveur/Serveur.csproj" --startup-project "Serveur/Serveur/Serveur.csproj"
 ```
 
-If you need to create a new migration:
+### Créer une nouvelle migration
 
 ```powershell
 dotnet ef migrations add <MigrationName> --configuration Release --project "Serveur/Serveur/Serveur.csproj" --startup-project "Serveur/Serveur/Serveur.csproj"
 ```
 
+### Nettoyer complètement la DB puis réappliquer
+
+```powershell
+dotnet ef database drop --force --configuration Release --project "Serveur/Serveur/Serveur.csproj" --startup-project "Serveur/Serveur/Serveur.csproj"
+dotnet ef database update --configuration Release --project "Serveur/Serveur/Serveur.csproj" --startup-project "Serveur/Serveur/Serveur.csproj"
+```
+
 ---
 
-## Run the API (`Serveur`)
+## 7) Seed de données de démo
+
+Le seeding s'exécute automatiquement au démarrage API (`ApplicationDbSeeder`).
+
+Il crée (si absents) :
+
+- 1 admin
+- 2 drivers
+- 3 passengers
+- profils `Author`
+- trips (`completed`, `ongoing`, `upcoming`)
+- reservations
+- payments (`Cash` et `Card`)
+- reviews drivers
+
+Comptes démo utiles :
+
+- `driver1@demo.local` / `123456`
+- `driver2@demo.local` / `123456`
+- `passenger1@demo.local` / `123456`
+- `passenger2@demo.local` / `123456`
+- `passenger3@demo.local` / `123456`
+- `admin@convoiturage.local` / `Admin@123456` (ou variables `SUPERADMIN_*`)
+
+> Le seed est idempotent : pas de duplication à chaque redémarrage.
+
+---
+
+## 8) Lancer l'API
 
 ```powershell
 dotnet run --project "Serveur/Serveur/Serveur.csproj" --launch-profile "Serveur"
 ```
 
-Default URLs:
+URLs par défaut :
 
 - `https://localhost:58842`
-- `http://localhost:58843` (redirects to HTTPS)
+- `http://localhost:58843` (redirect HTTPS)
 
-Swagger (development):
+Swagger (dev) :
 
 - `https://localhost:58842/swagger`
 
 ---
 
-## Build/Run WinForms Client (`Client`)
+## 9) Build / run Client WinForms
 
 ### Build
 
@@ -120,13 +172,13 @@ msbuild "Client/Client/Client.csproj" /t:Build /p:Configuration=Debug
 Start-Process "Client/Client/bin/Debug/Client.exe"
 ```
 
-In login screen, use API URL:
+API URL dans l'écran Login :
 
 - `https://localhost:58842`
 
 ---
 
-## Quick API Endpoints
+## 10) Endpoints rapides
 
 ### Auth
 
@@ -137,16 +189,34 @@ In login screen, use API URL:
 
 - `GET /api/trips`
 - `GET /api/trips/{id}`
-- `POST /api/trips` (Driver)
-- `DELETE /api/trips/{id}`
+- `POST /api/trips` (`Driver`)
+- `DELETE /api/trips/{id}` (`Driver`)
+- `GET /api/trips/{id}/reservations` (`Driver`,`Admin`)
 
 ### Reservations
 
-- `GET /api/reservations`
-- `POST /api/reservations`
-- `DELETE /api/reservations/{id}`
+- `GET /api/reservations` (`Passenger`)
+- `POST /api/reservations` (`Passenger`)
+- `DELETE /api/reservations/{id}` (`Passenger`)
 
-### Authors (Profile)
+### Driver Reviews
+
+- `POST /api/reviews` (`Passenger`)
+- `GET /api/reviews/driver/{driverId}`
+- `GET /api/drivers/{id}/profile`
+
+### Admin
+
+- `GET /api/admin/users`
+- `GET /api/admin/trips`
+- `GET /api/admin/reservations`
+- `GET /api/admin/payments`
+- `DELETE /api/admin/users/{id}`
+- `DELETE /api/admin/trips/{id}`
+- `DELETE /api/admin/reservations/{id}`
+- `DELETE /api/admin/payments/{id}`
+
+### Profile (Author)
 
 - `GET /api/authors/{userId}`
 - `POST /api/authors`
@@ -154,24 +224,18 @@ In login screen, use API URL:
 
 ---
 
-## Recommended GitHub Sharing Notes
+## 11) Troubleshooting
 
-When publishing to GitHub:
-
-1. Do **not** commit real secrets/passwords.
-2. Prefer environment variables or secret managers.
-3. Optionally add `.env.example` with placeholders.
-
----
-
-## Troubleshooting
-
-- If build says executable is locked (`.exe in use`), close running app then rebuild.
-- If HTTPS call fails, ensure API is running and certificate trust is configured.
-- If solution-level `.slnx` has path issues, use direct `*.csproj` commands above.
+- Si `Client.exe` est verrouillé : fermer l'app puis rebuild.
+- Si HTTPS échoue : vérifier que l'API tourne et certificat local ok.
+- Si `slnx` pose problème : utiliser les commandes `*.csproj` directes.
+- Si la DB est incohérente : faire `database drop` puis `database update`.
 
 ---
 
-## Author
+## 12) Notes sécurité (important)
 
-Created for learning and collaboration. Feel free to fork and improve.
+Le projet contient un mode démo (seed + stockage carte pour test). 
+Ne jamais utiliser ces pratiques en production sans chiffrement/tokenization/PCI.
+
+Ne committez pas de vrais secrets.

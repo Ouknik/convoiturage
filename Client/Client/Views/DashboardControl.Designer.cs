@@ -4,14 +4,17 @@ namespace Client.Views
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Label lblWelcome;
-        private System.Windows.Forms.Panel cardTrips;
-        private System.Windows.Forms.Panel cardReservations;
-        private System.Windows.Forms.Label lblTripsTitle;
-        private System.Windows.Forms.Label lblReservationsTitle;
-        private System.Windows.Forms.Label lblTripsValue;
-        private System.Windows.Forms.Label lblReservationsValue;
+        private System.Windows.Forms.Label lblRoleBadge;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.FlowLayoutPanel flowStats;
+        private System.Windows.Forms.Panel pnlActivities;
+        private System.Windows.Forms.Label lblActivitiesTitle;
+        private System.Windows.Forms.ListBox listActivities;
+        private System.Windows.Forms.Panel pnlOverview;
+        private System.Windows.Forms.Label lblOverviewTitle;
+        private System.Windows.Forms.Label lblOverviewText;
+        private System.Windows.Forms.Button btnQuickAction;
 
         protected override void Dispose(bool disposing)
         {
@@ -25,127 +28,163 @@ namespace Client.Views
         private void InitializeComponent()
         {
             this.lblWelcome = new System.Windows.Forms.Label();
-            this.cardTrips = new System.Windows.Forms.Panel();
-            this.lblTripsValue = new System.Windows.Forms.Label();
-            this.lblTripsTitle = new System.Windows.Forms.Label();
-            this.cardReservations = new System.Windows.Forms.Panel();
-            this.lblReservationsValue = new System.Windows.Forms.Label();
-            this.lblReservationsTitle = new System.Windows.Forms.Label();
+            this.lblRoleBadge = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.cardTrips.SuspendLayout();
-            this.cardReservations.SuspendLayout();
+            this.flowStats = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlActivities = new System.Windows.Forms.Panel();
+            this.listActivities = new System.Windows.Forms.ListBox();
+            this.lblActivitiesTitle = new System.Windows.Forms.Label();
+            this.pnlOverview = new System.Windows.Forms.Panel();
+            this.lblOverviewText = new System.Windows.Forms.Label();
+            this.lblOverviewTitle = new System.Windows.Forms.Label();
+            this.btnQuickAction = new System.Windows.Forms.Button();
+            this.pnlActivities.SuspendLayout();
+            this.pnlOverview.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblWelcome
             // 
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblWelcome.Location = new System.Drawing.Point(24, 20);
+            this.lblWelcome.Location = new System.Drawing.Point(24, 22);
             this.lblWelcome.Name = "lblWelcome";
             this.lblWelcome.Size = new System.Drawing.Size(129, 30);
             this.lblWelcome.TabIndex = 0;
             this.lblWelcome.Text = "Welcome...";
             // 
-            // cardTrips
+            // lblRoleBadge
             // 
-            this.cardTrips.BackColor = System.Drawing.Color.White;
-            this.cardTrips.Controls.Add(this.lblTripsValue);
-            this.cardTrips.Controls.Add(this.lblTripsTitle);
-            this.cardTrips.Location = new System.Drawing.Point(29, 88);
-            this.cardTrips.Name = "cardTrips";
-            this.cardTrips.Size = new System.Drawing.Size(260, 130);
-            this.cardTrips.TabIndex = 1;
-            // 
-            // lblTripsValue
-            // 
-            this.lblTripsValue.AutoSize = true;
-            this.lblTripsValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblTripsValue.Location = new System.Drawing.Point(15, 53);
-            this.lblTripsValue.Name = "lblTripsValue";
-            this.lblTripsValue.Size = new System.Drawing.Size(38, 45);
-            this.lblTripsValue.TabIndex = 1;
-            this.lblTripsValue.Text = "-";
-            // 
-            // lblTripsTitle
-            // 
-            this.lblTripsTitle.AutoSize = true;
-            this.lblTripsTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblTripsTitle.Location = new System.Drawing.Point(19, 20);
-            this.lblTripsTitle.Name = "lblTripsTitle";
-            this.lblTripsTitle.Size = new System.Drawing.Size(78, 19);
-            this.lblTripsTitle.TabIndex = 0;
-            this.lblTripsTitle.Text = "Total Trips";
-            // 
-            // cardReservations
-            // 
-            this.cardReservations.BackColor = System.Drawing.Color.White;
-            this.cardReservations.Controls.Add(this.lblReservationsValue);
-            this.cardReservations.Controls.Add(this.lblReservationsTitle);
-            this.cardReservations.Location = new System.Drawing.Point(316, 88);
-            this.cardReservations.Name = "cardReservations";
-            this.cardReservations.Size = new System.Drawing.Size(260, 130);
-            this.cardReservations.TabIndex = 2;
-            // 
-            // lblReservationsValue
-            // 
-            this.lblReservationsValue.AutoSize = true;
-            this.lblReservationsValue.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblReservationsValue.Location = new System.Drawing.Point(15, 53);
-            this.lblReservationsValue.Name = "lblReservationsValue";
-            this.lblReservationsValue.Size = new System.Drawing.Size(38, 45);
-            this.lblReservationsValue.TabIndex = 1;
-            this.lblReservationsValue.Text = "-";
-            // 
-            // lblReservationsTitle
-            // 
-            this.lblReservationsTitle.AutoSize = true;
-            this.lblReservationsTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblReservationsTitle.Location = new System.Drawing.Point(19, 20);
-            this.lblReservationsTitle.Name = "lblReservationsTitle";
-            this.lblReservationsTitle.Size = new System.Drawing.Size(125, 19);
-            this.lblReservationsTitle.TabIndex = 0;
-            this.lblReservationsTitle.Text = "My Reservations";
+            this.lblRoleBadge.AutoSize = true;
+            this.lblRoleBadge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(242)))), ((int)(((byte)(255)))));
+            this.lblRoleBadge.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblRoleBadge.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.lblRoleBadge.Location = new System.Drawing.Point(29, 60);
+            this.lblRoleBadge.Name = "lblRoleBadge";
+            this.lblRoleBadge.Padding = new System.Windows.Forms.Padding(10, 4, 10, 4);
+            this.lblRoleBadge.Size = new System.Drawing.Size(83, 23);
+            this.lblRoleBadge.TabIndex = 1;
+            this.lblRoleBadge.Text = "Passenger";
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(597, 26);
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Location = new System.Drawing.Point(617, 26);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(111, 31);
-            this.btnRefresh.TabIndex = 3;
+            this.btnRefresh.Size = new System.Drawing.Size(111, 33);
+            this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(29, 239);
-            this.progressBar.MarqueeAnimationSpeed = 25;
+            this.progressBar.Location = new System.Drawing.Point(29, 95);
+            this.progressBar.MarqueeAnimationSpeed = 24;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(547, 10);
+            this.progressBar.Size = new System.Drawing.Size(699, 8);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar.TabIndex = 4;
+            this.progressBar.TabIndex = 3;
             this.progressBar.Visible = false;
+            // 
+            // flowStats
+            // 
+            this.flowStats.Location = new System.Drawing.Point(29, 120);
+            this.flowStats.Name = "flowStats";
+            this.flowStats.Size = new System.Drawing.Size(699, 160);
+            this.flowStats.TabIndex = 4;
+            // 
+            // pnlActivities
+            // 
+            this.pnlActivities.BackColor = System.Drawing.Color.White;
+            this.pnlActivities.Controls.Add(this.listActivities);
+            this.pnlActivities.Controls.Add(this.lblActivitiesTitle);
+            this.pnlActivities.Location = new System.Drawing.Point(29, 297);
+            this.pnlActivities.Name = "pnlActivities";
+            this.pnlActivities.Size = new System.Drawing.Size(338, 210);
+            this.pnlActivities.TabIndex = 5;
+            // 
+            // listActivities
+            // 
+            this.listActivities.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listActivities.FormattingEnabled = true;
+            this.listActivities.Location = new System.Drawing.Point(20, 46);
+            this.listActivities.Name = "listActivities";
+            this.listActivities.Size = new System.Drawing.Size(298, 143);
+            this.listActivities.TabIndex = 1;
+            // 
+            // lblActivitiesTitle
+            // 
+            this.lblActivitiesTitle.AutoSize = true;
+            this.lblActivitiesTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblActivitiesTitle.Location = new System.Drawing.Point(16, 16);
+            this.lblActivitiesTitle.Name = "lblActivitiesTitle";
+            this.lblActivitiesTitle.Size = new System.Drawing.Size(111, 19);
+            this.lblActivitiesTitle.TabIndex = 0;
+            this.lblActivitiesTitle.Text = "Recent Activity";
+            // 
+            // pnlOverview
+            // 
+            this.pnlOverview.BackColor = System.Drawing.Color.White;
+            this.pnlOverview.Controls.Add(this.btnQuickAction);
+            this.pnlOverview.Controls.Add(this.lblOverviewText);
+            this.pnlOverview.Controls.Add(this.lblOverviewTitle);
+            this.pnlOverview.Location = new System.Drawing.Point(390, 297);
+            this.pnlOverview.Name = "pnlOverview";
+            this.pnlOverview.Size = new System.Drawing.Size(338, 210);
+            this.pnlOverview.TabIndex = 6;
+            // 
+            // lblOverviewText
+            // 
+            this.lblOverviewText.ForeColor = System.Drawing.Color.DimGray;
+            this.lblOverviewText.Location = new System.Drawing.Point(18, 46);
+            this.lblOverviewText.Name = "lblOverviewText";
+            this.lblOverviewText.Size = new System.Drawing.Size(302, 89);
+            this.lblOverviewText.TabIndex = 1;
+            this.lblOverviewText.Text = "System overview and quick summary go here.";
+            // 
+            // lblOverviewTitle
+            // 
+            this.lblOverviewTitle.AutoSize = true;
+            this.lblOverviewTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblOverviewTitle.Location = new System.Drawing.Point(16, 16);
+            this.lblOverviewTitle.Name = "lblOverviewTitle";
+            this.lblOverviewTitle.Size = new System.Drawing.Size(111, 19);
+            this.lblOverviewTitle.TabIndex = 0;
+            this.lblOverviewTitle.Text = "System Overview";
+            // 
+            // btnQuickAction
+            // 
+            this.btnQuickAction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuickAction.Location = new System.Drawing.Point(21, 149);
+            this.btnQuickAction.Name = "btnQuickAction";
+            this.btnQuickAction.Size = new System.Drawing.Size(152, 36);
+            this.btnQuickAction.TabIndex = 2;
+            this.btnQuickAction.Text = "Quick Action";
+            this.btnQuickAction.UseVisualStyleBackColor = true;
             // 
             // DashboardControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(250)))), ((int)(((byte)(251)))));
+            this.Controls.Add(this.pnlOverview);
+            this.Controls.Add(this.pnlActivities);
+            this.Controls.Add(this.flowStats);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.cardReservations);
-            this.Controls.Add(this.cardTrips);
+            this.Controls.Add(this.lblRoleBadge);
             this.Controls.Add(this.lblWelcome);
             this.Name = "DashboardControl";
             this.Size = new System.Drawing.Size(760, 520);
             this.Load += new System.EventHandler(this.DashboardControl_Load);
-            this.cardTrips.ResumeLayout(false);
-            this.cardTrips.PerformLayout();
-            this.cardReservations.ResumeLayout(false);
-            this.cardReservations.PerformLayout();
+            this.pnlActivities.ResumeLayout(false);
+            this.pnlActivities.PerformLayout();
+            this.pnlOverview.ResumeLayout(false);
+            this.pnlOverview.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
     }
 }

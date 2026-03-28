@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Client.Models
 {
     public class AuthorResponseDto
@@ -10,6 +12,15 @@ namespace Client.Models
         public string phone { get; set; }
         public string city { get; set; }
         public string profileImageUrl { get; set; }
+        public List<SavedCardDto> savedCards { get; set; }
+    }
+
+    public class SavedCardDto
+    {
+        public string cardHolderName { get; set; }
+        public string cardNumber { get; set; }
+        public string expiryDate { get; set; }
+        public string cvv { get; set; }
     }
 
     public class AuthorCreateDto

@@ -15,4 +15,15 @@ public static class ClaimsPrincipalExtensions
 
         return userId;
     }
+
+    public static string GetUserRole(this ClaimsPrincipal principal)
+    {
+        var role = principal.FindFirstValue(ClaimTypes.Role);
+        if (string.IsNullOrWhiteSpace(role))
+        {
+            throw new AppException("Invalid user role in token.", StatusCodes.Status401Unauthorized);
+        }
+
+        return role;
+    }
 }

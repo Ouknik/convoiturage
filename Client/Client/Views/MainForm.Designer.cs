@@ -10,10 +10,14 @@ namespace Client.Views
         private System.Windows.Forms.Button btnTrips;
         private System.Windows.Forms.Button btnReservations;
         private System.Windows.Forms.Button btnProfile;
+        private System.Windows.Forms.Button btnUsers;
+        private System.Windows.Forms.Button btnPayments;
+        private System.Windows.Forms.Button btnAdminPanel;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Label lblAppTitle;
         private System.Windows.Forms.Label lblHeaderUser;
         private System.Windows.Forms.Label lblHeaderRole;
+        private System.Windows.Forms.Label lblHeaderTitle;
         private System.Windows.Forms.PictureBox picHeader;
 
         protected override void Dispose(bool disposing)
@@ -31,10 +35,14 @@ namespace Client.Views
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnProfile = new System.Windows.Forms.Button();
             this.btnReservations = new System.Windows.Forms.Button();
+            this.btnUsers = new System.Windows.Forms.Button();
+            this.btnPayments = new System.Windows.Forms.Button();
+            this.btnAdminPanel = new System.Windows.Forms.Button();
             this.btnTrips = new System.Windows.Forms.Button();
             this.btnDashboard = new System.Windows.Forms.Button();
             this.lblAppTitle = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblHeaderTitle = new System.Windows.Forms.Label();
             this.lblHeaderRole = new System.Windows.Forms.Label();
             this.lblHeaderUser = new System.Windows.Forms.Label();
             this.picHeader = new System.Windows.Forms.PictureBox();
@@ -49,6 +57,9 @@ namespace Client.Views
             this.pnlSidebar.Controls.Add(this.btnLogout);
             this.pnlSidebar.Controls.Add(this.btnProfile);
             this.pnlSidebar.Controls.Add(this.btnReservations);
+            this.pnlSidebar.Controls.Add(this.btnAdminPanel);
+            this.pnlSidebar.Controls.Add(this.btnPayments);
+            this.pnlSidebar.Controls.Add(this.btnUsers);
             this.pnlSidebar.Controls.Add(this.btnTrips);
             this.pnlSidebar.Controls.Add(this.btnDashboard);
             this.pnlSidebar.Controls.Add(this.lblAppTitle);
@@ -62,7 +73,7 @@ namespace Client.Views
             // 
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(20, 624);
+            this.btnLogout.Location = new System.Drawing.Point(20, 621);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(180, 36);
             this.btnLogout.TabIndex = 5;
@@ -93,6 +104,42 @@ namespace Client.Views
             this.btnReservations.Text = "Reservations";
             this.btnReservations.UseVisualStyleBackColor = true;
             this.btnReservations.Click += new System.EventHandler(this.btnReservations_Click);
+            // 
+            // btnUsers
+            // 
+            this.btnUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUsers.ForeColor = System.Drawing.Color.White;
+            this.btnUsers.Location = new System.Drawing.Point(20, 308);
+            this.btnUsers.Name = "btnUsers";
+            this.btnUsers.Size = new System.Drawing.Size(180, 40);
+            this.btnUsers.TabIndex = 6;
+            this.btnUsers.Text = "Users";
+            this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
+            // 
+            // btnPayments
+            // 
+            this.btnPayments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayments.ForeColor = System.Drawing.Color.White;
+            this.btnPayments.Location = new System.Drawing.Point(20, 354);
+            this.btnPayments.Name = "btnPayments";
+            this.btnPayments.Size = new System.Drawing.Size(180, 40);
+            this.btnPayments.TabIndex = 7;
+            this.btnPayments.Text = "Payments";
+            this.btnPayments.UseVisualStyleBackColor = true;
+            this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
+            // 
+            // btnAdminPanel
+            // 
+            this.btnAdminPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdminPanel.ForeColor = System.Drawing.Color.White;
+            this.btnAdminPanel.Location = new System.Drawing.Point(20, 400);
+            this.btnAdminPanel.Name = "btnAdminPanel";
+            this.btnAdminPanel.Size = new System.Drawing.Size(180, 40);
+            this.btnAdminPanel.TabIndex = 8;
+            this.btnAdminPanel.Text = "Admin Panel";
+            this.btnAdminPanel.UseVisualStyleBackColor = true;
+            this.btnAdminPanel.Click += new System.EventHandler(this.btnAdminPanel_Click);
             // 
             // btnTrips
             // 
@@ -131,6 +178,7 @@ namespace Client.Views
             // 
             // pnlHeader
             // 
+            this.pnlHeader.Controls.Add(this.lblHeaderTitle);
             this.pnlHeader.Controls.Add(this.lblHeaderRole);
             this.pnlHeader.Controls.Add(this.lblHeaderUser);
             this.pnlHeader.Controls.Add(this.picHeader);
@@ -139,6 +187,16 @@ namespace Client.Views
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(964, 76);
             this.pnlHeader.TabIndex = 1;
+            // 
+            // lblHeaderTitle
+            // 
+            this.lblHeaderTitle.AutoSize = true;
+            this.lblHeaderTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblHeaderTitle.Location = new System.Drawing.Point(24, 24);
+            this.lblHeaderTitle.Name = "lblHeaderTitle";
+            this.lblHeaderTitle.Size = new System.Drawing.Size(106, 25);
+            this.lblHeaderTitle.TabIndex = 3;
+            this.lblHeaderTitle.Text = "Dashboard";
             // 
             // lblHeaderRole
             // 

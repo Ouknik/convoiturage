@@ -7,7 +7,14 @@ namespace Client.Models
         public int id { get; set; }
         public string departure { get; set; }
         public string destination { get; set; }
-        public string date { get; set; }
+        public string departureTime { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public string startTime { get; set; }
+        public int numberOfDays { get; set; }
+        public decimal pricePerSeat { get; set; }
+        public string createdAt { get; set; }
+        public string status { get; set; }
         public int availableSeats { get; set; }
         public int driverId { get; set; }
     }
@@ -16,7 +23,12 @@ namespace Client.Models
     {
         public string departure { get; set; }
         public string destination { get; set; }
-        public string date { get; set; }
+        public string departureTime { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+        public string startTime { get; set; }
+        public int numberOfDays { get; set; }
+        public decimal pricePerSeat { get; set; }
         public int availableSeats { get; set; }
     }
 

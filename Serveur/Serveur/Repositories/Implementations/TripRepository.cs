@@ -21,6 +21,12 @@ public class TripRepository : ITripRepository
     public Task<Trip?> GetByIdForUpdateAsync(int id, CancellationToken cancellationToken = default) =>
         _dbContext.Trips.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
 
+    public async Task<IReadOnlyList<Trip>> GetAllAsync(CancellationToken cancellationToken = default) =>
+        await _dbContext.Trips.AsNoTracking().OrderByDescending(t => t.DepartureTime).ToListAsync(cancellationToken);
+
+    public Task<int> CountByDriverIdAsync(int driverId, CancellationToken cancellationToken = default) =>
+        _dbContext.Trips.AsNoTracking().CountAsync(t => t.DriverId == driverId, cancellationToken);
+
     public async Task<PagedResultDto<Trip>> GetPagedAsync(TripQueryParamsDto query, CancellationToken cancellationToken = default)
     {
         var tripsQuery = _dbContext.Trips.AsNoTracking().AsQueryable();
@@ -35,12 +41,12 @@ public class TripRepository : ITripRepository
         if (query.Date.HasValue)
         {
             var date = query.Date.Value.Date;
-            tripsQuery = tripsQuery.Where(t => t.Date.Date == date);
+            tripsQuery = tripsQuery.Where(t => t.DepartureTime.Date == date);
         }
 
         var totalCount = await tripsQuery.CountAsync(cancellationToken);
         var items = await tripsQuery
-            .OrderBy(t => t.Date)
+            .OrderBy(t => t.DepartureTime)
             .Skip((query.PageNumber - 1) * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);

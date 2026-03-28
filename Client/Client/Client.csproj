@@ -70,8 +70,10 @@
     <Compile Include="Models\ApiEnvelope.cs" />
     <Compile Include="Models\AuthModels.cs" />
     <Compile Include="Models\AuthorModels.cs" />
+    <Compile Include="Models\PaymentModels.cs" />
     <Compile Include="Models\TripModels.cs" />
     <Compile Include="Models\ReservationModels.cs" />
+    <Compile Include="Models\ReviewModels.cs" />
     <Compile Include="Views\DashboardControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -84,11 +86,59 @@
     <Compile Include="Views\TripsControl.Designer.cs">
       <DependentUpon>TripsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\TripCardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TripCardControl.Designer.cs">
+      <DependentUpon>TripCardControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TripEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TripEditorForm.Designer.cs">
+      <DependentUpon>TripEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TripReservationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TripReservationsForm.Designer.cs">
+      <DependentUpon>TripReservationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReservationPaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReservationPaymentForm.Designer.cs">
+      <DependentUpon>ReservationPaymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReviewPopupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ReviewPopupForm.Designer.cs">
+      <DependentUpon>ReviewPopupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DriverProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DriverProfileForm.Designer.cs">
+      <DependentUpon>DriverProfileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReservationsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\ReservationsControl.Designer.cs">
       <DependentUpon>ReservationsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReservationCardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\ReservationCardControl.Designer.cs">
+      <DependentUpon>ReservationCardControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\AdminControl.Designer.cs">
+      <DependentUpon>AdminControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileControl.cs">
       <SubType>UserControl</SubType>

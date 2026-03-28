@@ -34,6 +34,11 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request, CancellationToken cancellationToken = default)
     {
+        if (request.Role is UserRole.Admin)
+        {
+            throw new AppException("Admin accounts cannot be self-registered.", StatusCodes.Status403Forbidden);
+        }
+
         if (await _userRepository.EmailExistsAsync(request.Email, cancellationToken))
         {
             throw new AppException("Email already exists.", StatusCodes.Status409Conflict);
